@@ -30,21 +30,29 @@ struct ContentView: View {
 
             Image("Waitscape Logo")
                 .resizable()
+                .padding([.top, .leading, .bottom])
+                .frame(width: 220.0, height: 150.0)
                 .scaledToFit()
+                .offset(x: -105, y: -5)
+           
             NavigationView{
-                
-                ZStack{
+            
+                VStack {
                     Text("Detroit Metro Airport")
                       .font(.headline)
-                Arc(waitTime: 120)
-                    .stroke(Color("Waitscape Blue"), lineWidth: 12)
+                    ZStack{
+                        Text("TSA Wait Time")
+                          .font(.headline)
+                    Arc(waitTime: 120)
+                        .stroke(Color("Waitscape Blue"), lineWidth: 12)
 
-                    Arc(waitTime: waitTime)
-                        .stroke(Color("Waitscape Orange"), lineWidth:12)
-           
-            
+                        Arc(waitTime: waitTime)
+                            .stroke(Color("Waitscape Orange"), lineWidth:12)
+               
+                
+                    }
+                    .padding()
                 }
-                .padding()
             }
             
         }
