@@ -8,10 +8,19 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var searchAirports = ""
     var body: some View {
-       Image("Waitscape Logo")
+        VStack{
+            
+         Image("Waitscape Logo")
             .resizable()
             .scaledToFit()
+        NavigationView{
+            Text("Detroit Metro Airport")
+                .font(.headline)
+        }
+        .searchable(text: $searchAirports)
+        }
     }
 }
 
