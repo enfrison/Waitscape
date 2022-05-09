@@ -37,10 +37,10 @@ struct ContentView: View {
                     Text("Detroit Metro Airport")
                       .font(.headline)
                 Arc(waitTime: 120)
-                    .stroke(.blue, lineWidth: 12)
+                    .stroke(Color("Waitscape Blue"), lineWidth: 12)
 
                     Arc(waitTime: waitTime)
-                        .stroke(.gray, lineWidth:12)
+                        .stroke(Color("Waitscape Orange"), lineWidth:12)
            
             
                 }
