@@ -7,6 +7,12 @@
 
 import SwiftUI
 
+struct airportStatus: Codable {
+    var rightnow_description: String
+    var city: String
+    var state: String
+    var code: String
+}
 struct Arc: Shape {
 var waitTime: Double
 //    let startAngle: Angle
@@ -23,6 +29,7 @@ var waitTime: Double
 }
 
 struct ContentView: View {
+    @State private var airportStatus = AirportStatus(rightnow_description: "Empty", city: "Nothing", state: "Nothing", code: "Nothing")
     @State private var waitTime: Double = 15
     @State private var searchAirports = ""
     var body: some View {
@@ -35,14 +42,28 @@ struct ContentView: View {
                 .scaledToFit()
                 .offset(x: -105, y: -5)
            
-            NavigationView{
+            //NavigationView{
             
                 VStack {
-                    Text("Detroit Metro Airport")
-                      .font(.headline)
-                    ZStack{
-                        Text("TSA Wait Time")
-                          .font(.headline)
+                    Text(airportStatus.city)
+                            .font(.largeTitle)
+                        Text(airportStatus.state)
+                            .font(.largeTitle)
+                        
+                    }
+                    Text(airportStatus.code)
+                        .font(.title2)
+                        .padding()
+                    
+                    
+                    //Text(airportStatus.rightnow_description)
+                    //Text("Wait time at :")
+                        .padding()
+                    ZStack {
+                        Text("\(Int(waitTime)) Minutes")
+                            .font(.largeTitle)
+        
+                            .multilineTextAlignment(.center)
                     Arc(waitTime: 120)
                         .stroke(Color("Waitscape Blue"), lineWidth: 12)
 
@@ -50,17 +71,41 @@ struct ContentView: View {
                             .stroke(Color("Waitscape Orange"), lineWidth:12)
                
                 
+                    }   .frame(width: 300, height: 300)
+                //Slider(value: $waitTime, in: 0...120)
+                .task {
+                    guard let url = URL(string: "https://www.tsawaittimes.com/api/airport/bpmLZd3ywayMaJfSJHIjLGxzxOZlpzA9/DTW") else {
+                        print("Invalid URL")
+                        return
                     }
-                    .padding()
+                    do {
+                        let (data, _) = try await URLSession.shared.data(from: url)
+                        
+                        if let decodedResponse = try? JSONDecoder().decode(AirportStatus.self, from: data) {
+                            airportStatus = decodedResponse
+                            waitTime = (airportStatus.rightnow_description as NSString).doubleValue
+                        }            } catch {
+                            print("Invalid data")
+                        }
                 }
+                
+                
             }
-    
-            Spacer()
+            
+            
         }
-        .searchable(text: $searchAirports)
-        
     }
-}
+
+                    //.padding()
+
+
+    
+            //Spacer()
+
+       //.searchable(text: $searchAirports)
+        
+
+
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
