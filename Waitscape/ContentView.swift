@@ -54,9 +54,11 @@ struct ContentView: View {
                     .padding()
                 }
             }
-            
+    
+            Spacer()
         }
         .searchable(text: $searchAirports)
+        
     }
 }
 
