@@ -41,38 +41,45 @@ struct ContentView: View {
                 .frame(width: 220.0, height: 150.0)
                 .scaledToFit()
                 .offset(x: -105, y: -5)
-           
-            //NavigationView{
-            
+            NavigationView{
+        
+             
                 VStack {
-                    Text(airportStatus.city)
-                            .font(.largeTitle)
-                        Text(airportStatus.state)
-                            .font(.largeTitle)
-                        
+//                    HStack {
+//                        Text(airportStatus.city)
+//                            .font(.largeTitle)
+//
+//                        Text(airportStatus.state)
+//                            .font(.largeTitle)
+//                    }
                     }
-                    Text(airportStatus.code)
-                        .font(.title2)
-                        .padding()
+//                    Text(airportStatus.code)
+//                        .font(.title2)
+//                        .padding()
                     
                     
                     //Text(airportStatus.rightnow_description)
                     //Text("Wait time at :")
-                        .padding()
+                .padding()
+                
                     ZStack {
+                        VStack{
+                            Text(airportStatus.code)
+                                .font(.largeTitle)
+                            .padding()
                         Text("\(Int(waitTime)) Minutes")
                             .font(.largeTitle)
         
                             .multilineTextAlignment(.center)
+                        }
                     Arc(waitTime: 120)
                         .stroke(Color("Waitscape Blue"), lineWidth: 12)
 
                         Arc(waitTime: waitTime)
                             .stroke(Color("Waitscape Orange"), lineWidth:12)
                
-                
-                    }   .frame(width: 300, height: 300)
-                //Slider(value: $waitTime, in: 0...120)
+                    }
+                     .frame(width: 300, height: 300)
                 .task {
                     guard let url = URL(string: "https://www.tsawaittimes.com/api/airport/bpmLZd3ywayMaJfSJHIjLGxzxOZlpzA9/DTW") else {
                         print("Invalid URL")
@@ -88,21 +95,21 @@ struct ContentView: View {
                             print("Invalid data")
                         }
                 }
-                
-                
+                Spacer()
+                 
+                    
+                  
             }
-            
+            .searchable(text: $searchAirports)
+            .navigationBarBackButtonHidden(true)
+           
+            }
+      
             
         }
-    }
+     
+}
 
-                    //.padding()
-
-
-    
-            //Spacer()
-
-       //.searchable(text: $searchAirports)
         
 
 
