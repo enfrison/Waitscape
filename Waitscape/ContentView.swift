@@ -32,47 +32,97 @@ struct ContentView: View {
     @State private var airportStatus = AirportStatus(rightnow_description: "Empty", city: "Nothing", state: "Nothing", code: "Nothing")
     @State private var waitTime: Double = 15
     @State private var searchAirports = ""
+    @State var isSearching = false
+    
     var body: some View {
         VStack{
 
             Image("Waitscape Logo")
                 .resizable()
-                .padding([.top, .leading, .bottom])
+                .padding([.leading, .bottom])
                 .frame(width: 220.0, height: 150.0)
                 .scaledToFit()
                 .offset(x: -105, y: -5)
-           
-            //NavigationView{
-            
-                VStack {
-                    Text(airportStatus.city)
-                            .font(.largeTitle)
-                        Text(airportStatus.state)
-                            .font(.largeTitle)
-                        
+            HStack{
+            HStack{
+                TextField("Search Airports", text: $searchAirports)
+                    .padding(.leading, 24)
+            }
+            .padding()
+            .background(Color(.systemGray5))
+            .cornerRadius(12)
+            .padding(.horizontal)
+            .onTapGesture(perform: {
+                isSearching = true
+            })
+            .overlay(
+                HStack{
+                   Image(systemName: "magnifyingglass")
+                    Spacer()
+                if isSearching {
+                    Button(action: { searchAirports = "" }, label: {
+                        Image(systemName: "xmark.circle.fill")
+                            .padding(.vertical)
+                    })
+                   
                     }
-                    Text(airportStatus.code)
-                        .font(.title2)
-                        .padding()
+                }.padding(.horizontal, 32)
+                    .foregroundColor(.gray)
+            )
+                if isSearching{
+                Button(action: { isSearching = false
+                    searchAirports = ""
+                }, label: { Text("Cancel")
+                        .padding(.trailing)
+                        .padding(.leading, -12)
+                })
+                    .transition(.move(edge: .trailing))
+                    
+            }
+            }
+            
+            
+//            NavigationView{
+        
+             
+                //      VStack {
+                    //                    HStack {
+                    //                        Text(airportStatus.city)
+                    //                            .font(.largeTitle)
+                    //
+                    //                        Text(airportStatus.state)
+                    //                            .font(.largeTitle)
+                    //                    }
+  //
+//                    Text(airportStatus.code)
+//                        .font(.title2)
+//                        .padding()
                     
                     
                     //Text(airportStatus.rightnow_description)
                     //Text("Wait time at :")
-                        .padding()
+          //      .padding()
+            .padding(.vertical, -15)
+            Spacer()
                     ZStack {
+                        VStack{
+                            Text(airportStatus.code)
+                                .font(.largeTitle)
+                            .padding()
                         Text("\(Int(waitTime)) Minutes")
                             .font(.largeTitle)
         
                             .multilineTextAlignment(.center)
+                        }
                     Arc(waitTime: 120)
                         .stroke(Color("Waitscape Blue"), lineWidth: 12)
 
                         Arc(waitTime: waitTime)
                             .stroke(Color("Waitscape Orange"), lineWidth:12)
                
-                
-                    }   .frame(width: 300, height: 300)
-                //Slider(value: $waitTime, in: 0...120)
+                    }
+                    .padding(.bottom, 100.0)
+                    .frame(width: 300, height: 300)
                 .task {
                     guard let url = URL(string: "https://www.tsawaittimes.com/api/airport/bpmLZd3ywayMaJfSJHIjLGxzxOZlpzA9/DTW") else {
                         print("Invalid URL")
@@ -88,21 +138,22 @@ struct ContentView: View {
                             print("Invalid data")
                         }
                 }
-                
-                
-            }
+                Spacer()
+                 
+                    
+                  
+//            }
+//            .searchable(text: $searchAirports)
             
+        
+           
+            }
+      
             
         }
-    }
+     
+}
 
-                    //.padding()
-
-
-    
-            //Spacer()
-
-       //.searchable(text: $searchAirports)
         
 
 
