@@ -43,43 +43,43 @@ struct ContentView: View {
                 .frame(width: 220.0, height: 150.0)
                 .scaledToFit()
                 .offset(x: -105, y: -5)
-            HStack{
-            HStack{
-                TextField("Search Airports", text: $searchAirports)
-                    .padding(.leading, 24)
-            }
-            .padding()
-            .background(Color(.systemGray5))
-            .cornerRadius(12)
-            .padding(.horizontal)
-            .onTapGesture(perform: {
-                isSearching = true
-            })
-            .overlay(
-                HStack{
-                   Image(systemName: "magnifyingglass")
-                    Spacer()
-                if isSearching {
-                    Button(action: { searchAirports = "" }, label: {
-                        Image(systemName: "xmark.circle.fill")
-                            .padding(.vertical)
-                    })
-                   
-                    }
-                }.padding(.horizontal, 32)
-                    .foregroundColor(.gray)
-            )
-                if isSearching{
-                Button(action: { isSearching = false
-                    searchAirports = ""
-                }, label: { Text("Cancel")
-                        .padding(.trailing)
-                        .padding(.leading, -12)
-                })
-                    .transition(.move(edge: .trailing))
-                    
-            }
-            }
+//            HStack{
+//            HStack{
+//                TextField("Search Airports", text: $searchAirports)
+//                    .padding(.leading, 24)
+//            }
+//            .padding()
+//            .background(Color(.systemGray5))
+//            .cornerRadius(12)
+//            .padding(.horizontal)
+//            .onTapGesture(perform: {
+//                isSearching = true
+//            })
+//            .overlay(
+//                HStack{
+//                   Image(systemName: "magnifyingglass")
+//                    Spacer()
+//                if isSearching {
+//                    Button(action: { searchAirports = "" }, label: {
+//                        Image(systemName: "xmark.circle.fill")
+//                            .padding(.vertical)
+//                    })
+//
+//                    }
+//                }.padding(.horizontal, 32)
+//                    .foregroundColor(.gray)
+//            )
+//                if isSearching{
+//                Button(action: { isSearching = false
+//                    searchAirports = ""
+//                }, label: { Text("Cancel")
+//                        .padding(.trailing)
+//                        .padding(.leading, -12)
+//                })
+//                    .transition(.move(edge: .trailing))
+//
+//            }
+//            }
             
             
 //            NavigationView{

@@ -109,7 +109,7 @@ struct TSA_Previews: PreviewProvider {
 struct WaitscapeApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            CurrentLocation()
         }
     }
 }
