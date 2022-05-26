@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EA0A11FB283D1BE500DD024C /* CurrentLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0A11FA283D1BE500DD024C /* CurrentLocation.swift */; };
 		EA2FB338282563DE00867747 /* WaitscapeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2FB337282563DE00867747 /* WaitscapeApp.swift */; };
 		EA2FB33A282563DE00867747 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2FB339282563DE00867747 /* ContentView.swift */; };
 		EA2FB33C282563DF00867747 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA2FB33B282563DF00867747 /* Assets.xcassets */; };
@@ -14,6 +15,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		EA0A11FA283D1BE500DD024C /* CurrentLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentLocation.swift; sourceTree = "<group>"; };
 		EA2FB334282563DE00867747 /* Waitscape.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Waitscape.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA2FB337282563DE00867747 /* WaitscapeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitscapeApp.swift; sourceTree = "<group>"; };
 		EA2FB339282563DE00867747 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -53,6 +55,7 @@
 			children = (
 				EA2FB337282563DE00867747 /* WaitscapeApp.swift */,
 				EA2FB339282563DE00867747 /* ContentView.swift */,
+				EA0A11FA283D1BE500DD024C /* CurrentLocation.swift */,
 				EA2FB33B282563DF00867747 /* Assets.xcassets */,
 				EA2FB33D282563DF00867747 /* Preview Content */,
 			);
@@ -137,6 +140,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EA0A11FB283D1BE500DD024C /* CurrentLocation.swift in Sources */,
 				EA2FB33A282563DE00867747 /* ContentView.swift in Sources */,
 				EA2FB338282563DE00867747 /* WaitscapeApp.swift in Sources */,
 			);

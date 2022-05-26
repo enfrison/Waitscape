@@ -49,6 +49,11 @@ struct ContentView: View {
                     .padding(.leading, 24)
             }
             .padding()
+            .onChange(of: searchAirports) {newValue in Task {
+                await fetchAirportStatus(name: newValue)
+            }
+                
+            }
             .background(Color(.systemGray5))
             .cornerRadius(12)
             .padding(.horizontal)
@@ -64,7 +69,7 @@ struct ContentView: View {
                         Image(systemName: "xmark.circle.fill")
                             .padding(.vertical)
                     })
-                   
+
                     }
                 }.padding(.horizontal, 32)
                     .foregroundColor(.gray)
@@ -77,7 +82,7 @@ struct ContentView: View {
                         .padding(.leading, -12)
                 })
                     .transition(.move(edge: .trailing))
-                    
+
             }
             }
             
@@ -124,20 +129,7 @@ struct ContentView: View {
                     .padding(.bottom, 100.0)
                     .frame(width: 300, height: 300)
                 .task {
-                    guard let url = URL(string: "https://www.tsawaittimes.com/api/airport/tNnuJo9m20iRpv2MKI1XFbZeC2BrjYLr/DTW"
-) else {
-                        print("Invalid URL")
-                        return
-                    }
-                    do {
-                        let (data, _) = try await URLSession.shared.data(from: url)
-                        
-                        if let decodedResponse = try? JSONDecoder().decode(AirportStatus.self, from: data) {
-                            airportStatus = decodedResponse
-                            waitTime = (airportStatus.rightnow_description as NSString).doubleValue
-                        }            } catch {
-                            print("Invalid data")
-                        }
+                    await fetchAirportStatus(name: "")
                 }
                 Spacer()
                  
@@ -152,6 +144,22 @@ struct ContentView: View {
       
             
         }
+    func fetchAirportStatus(name: String) async {
+        guard let url = URL(string: "https://www.tsawaittimes.com/api/airport/tNnuJo9m20iRpv2MKI1XFbZeC2BrjYLr/\(name)"
+) else {
+            print("Invalid URL")
+            return
+        }
+        do {
+            let (data, _) = try await URLSession.shared.data(from: url)
+            
+            if let decodedResponse = try? JSONDecoder().decode(AirportStatus.self, from: data) {
+                airportStatus = decodedResponse
+                waitTime = (airportStatus.rightnow_description as NSString).doubleValue
+            }            } catch {
+                print("Invalid data")
+            }
+    }
      
 }
 
