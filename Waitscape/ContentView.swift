@@ -40,7 +40,7 @@ struct ContentView: View {
             Image("Waitscape Logo")
                 .resizable()
                 .padding([.leading, .bottom])
-                .frame(width: 220.0, height: 150.0)
+                .frame(width: 220.0, height: 175.0)
                 .scaledToFit()
                 .offset(x: -105, y: -5)
             HStack{
