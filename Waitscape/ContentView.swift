@@ -35,14 +35,20 @@ struct ContentView: View {
     @State var isSearching = false
     
     var body: some View {
-        VStack{
+        ScrollView{
+            
+         VStack{
 
-            Image("Waitscape Logo")
-                .resizable()
-                .padding([.leading, .bottom])
-                .frame(width: 220.0, height: 175.0)
-                .scaledToFit()
-                .offset(x: -105, y: -5)
+             HStack {
+                 Image("Waitscape Logo")
+                    .resizable()
+                    .scaledToFit()
+                    .padding([.leading, .bottom])
+                    .frame(height: 175.0)
+               
+                 Spacer()
+             }
+     
             HStack{
             HStack{
                 TextField("Search Airports", text: $searchAirports)
@@ -57,6 +63,7 @@ struct ContentView: View {
             .background(Color(.systemGray5))
             .cornerRadius(12)
             .padding(.horizontal)
+      
             .onTapGesture(perform: {
                 isSearching = true
             })
@@ -82,8 +89,8 @@ struct ContentView: View {
                         .padding(.leading, -12)
                 })
                     .transition(.move(edge: .trailing))
-
-            }
+                    
+                }
             }
             
             
@@ -107,31 +114,34 @@ struct ContentView: View {
                     //Text(airportStatus.rightnow_description)
                     //Text("Wait time at :")
           //      .padding()
-            .padding(.vertical, -15)
+           // .padding(.vertical, -15)
             Spacer()
-                    ZStack {
-                        VStack{
-                            Text(airportStatus.code)
+             GeometryReader { geometry in
+                 ZStack {
+                            VStack{
+                                Text(airportStatus.code)
+                                    .font(.largeTitle)
+                                .padding()
+                            Text("\(Int(waitTime)) Minutes")
                                 .font(.largeTitle)
-                            .padding()
-                        Text("\(Int(waitTime)) Minutes")
-                            .font(.largeTitle)
-        
-                            .multilineTextAlignment(.center)
+            
+                                .multilineTextAlignment(.center)
+                            }
+                        Arc(waitTime: 120)
+                            .stroke(Color("Waitscape Blue"), lineWidth: 12)
+                            .opacity(0.3)
+                            Arc(waitTime: waitTime)
+                                .stroke(Color("Waitscape Orange"), lineWidth:12)
+                     //animation line
+                   
                         }
-                    Arc(waitTime: 120)
-                        .stroke(Color("Waitscape Blue"), lineWidth: 12)
-
-                        Arc(waitTime: waitTime)
-                            .stroke(Color("Waitscape Orange"), lineWidth:12)
-               
-                    }
-                    .padding(.bottom, 100.0)
-                    .frame(width: 300, height: 300)
-                .task {
-                    await fetchAirportStatus(name: "")
+                        .padding(40)
+                 .frame(width: geometry.size.width, height: geometry.size.width)
+                    .task {
+                        await fetchAirportStatus(name: "")
                 }
-                Spacer()
+             }
+            
                  
                     
                   
@@ -142,7 +152,7 @@ struct ContentView: View {
            
             }
       
-            
+    }
         }
     func fetchAirportStatus(name: String) async {
         guard let url = URL(string: "https://www.tsawaittimes.com/api/airport/tNnuJo9m20iRpv2MKI1XFbZeC2BrjYLr/\(name)"
