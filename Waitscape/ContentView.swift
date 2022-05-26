@@ -44,7 +44,7 @@ struct ContentView: View {
                     .resizable()
                     .scaledToFit()
                     .padding([.leading, .bottom])
-                    .frame(height: 175.0)
+                    .frame(height: 100.0)
                
                  Spacer()
              }
@@ -55,6 +55,7 @@ struct ContentView: View {
                     .padding(.leading, 24)
             }
             .padding()
+            .submitLabel(.search)
             .onChange(of: searchAirports) {newValue in Task {
                 await fetchAirportStatus(name: newValue)
             }
@@ -84,13 +85,16 @@ struct ContentView: View {
                 if isSearching{
                 Button(action: { isSearching = false
                     searchAirports = ""
+                    hideKeyboard()
                 }, label: { Text("Cancel")
                         .padding(.trailing)
                         .padding(.leading, -12)
+                  
                 })
                     .transition(.move(edge: .trailing))
                     
                 }
+                
             }
             
             
@@ -129,7 +133,7 @@ struct ContentView: View {
                             }
                         Arc(waitTime: 120)
                             .stroke(Color("Waitscape Blue"), lineWidth: 12)
-                            .opacity(0.3)
+                            .opacity(0.4)
                             Arc(waitTime: waitTime)
                                 .stroke(Color("Waitscape Orange"), lineWidth:12)
                      //animation line
@@ -173,7 +177,13 @@ struct ContentView: View {
      
 }
 
-        
+#if canImport(UIKit)
+extension View {
+    func hideKeyboard() {
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    }
+}
+#endif
 
 
 
