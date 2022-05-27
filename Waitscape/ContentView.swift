@@ -29,7 +29,7 @@ var waitTime: Double
 }
 
 struct ContentView: View {
-    @State private var airportStatus = AirportStatus(rightnow_description: "Empty", city: "Nothing", state: "Nothing", code: "Nothing")
+    @State private var airportStatus = AirportStatus(rightnow_description: "Empty", city: "No results", state: "Nothing", code: "No Results")
     @State private var waitTime: Double = 15
     @State private var searchAirports = ""
     @State var isSearching = false
@@ -44,7 +44,7 @@ struct ContentView: View {
                     .resizable()
                     .scaledToFit()
                     .padding([.leading, .bottom])
-                    .frame(height: 175.0)
+                    .frame(height: 100.0)
                
                  Spacer()
              }
@@ -55,6 +55,7 @@ struct ContentView: View {
                     .padding(.leading, 24)
             }
             .padding()
+            .submitLabel(.search)
             .onChange(of: searchAirports) {newValue in Task {
                 await fetchAirportStatus(name: newValue)
             }
@@ -84,14 +85,20 @@ struct ContentView: View {
                 if isSearching{
                 Button(action: { isSearching = false
                     searchAirports = ""
+                    hideKeyboard()
                 }, label: { Text("Cancel")
                         .padding(.trailing)
                         .padding(.leading, -12)
+                        
+                  
                 })
-                    .transition(.move(edge: .trailing))
+                        .animation(.easeInOut(duration: 2), value: 1)
+                    //.transition(.move(edge: .trailing))
                     
                 }
+                
             }
+        
             
             
 //            NavigationView{
@@ -129,10 +136,10 @@ struct ContentView: View {
                             }
                         Arc(waitTime: 120)
                             .stroke(Color("Waitscape Blue"), lineWidth: 12)
-                            .opacity(0.3)
+                            .opacity(0.4)
                             Arc(waitTime: waitTime)
                                 .stroke(Color("Waitscape Orange"), lineWidth:12)
-                     //animation line
+                                .animation(.spring(), value: 0.1)
                    
                         }
                         .padding(40)
@@ -156,6 +163,7 @@ struct ContentView: View {
         }
     func fetchAirportStatus(name: String) async {
         guard let url = URL(string: "https://www.tsawaittimes.com/api/airport/tNnuJo9m20iRpv2MKI1XFbZeC2BrjYLr/\(name)"
+                            
 ) else {
             print("Invalid URL")
             return
@@ -173,7 +181,13 @@ struct ContentView: View {
      
 }
 
-        
+#if canImport(UIKit)
+extension View {
+    func hideKeyboard() {
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    }
+}
+#endif
 
 
 
