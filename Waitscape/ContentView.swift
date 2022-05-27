@@ -29,7 +29,7 @@ var waitTime: Double
 }
 
 struct ContentView: View {
-    @State private var airportStatus = AirportStatus(rightnow_description: "Empty", city: "Nothing", state: "Nothing", code: "Nothing")
+    @State private var airportStatus = AirportStatus(rightnow_description: "Empty", city: "No results", state: "Nothing", code: "No Results")
     @State private var waitTime: Double = 15
     @State private var searchAirports = ""
     @State var isSearching = false
@@ -89,13 +89,16 @@ struct ContentView: View {
                 }, label: { Text("Cancel")
                         .padding(.trailing)
                         .padding(.leading, -12)
+                        
                   
                 })
-                    .transition(.move(edge: .trailing))
+                        .animation(.easeInOut(duration: 2), value: 1)
+                    //.transition(.move(edge: .trailing))
                     
                 }
                 
             }
+        
             
             
 //            NavigationView{
@@ -136,7 +139,7 @@ struct ContentView: View {
                             .opacity(0.4)
                             Arc(waitTime: waitTime)
                                 .stroke(Color("Waitscape Orange"), lineWidth:12)
-                     //animation line
+                                .animation(.spring(), value: 0.1)
                    
                         }
                         .padding(40)
@@ -160,6 +163,7 @@ struct ContentView: View {
         }
     func fetchAirportStatus(name: String) async {
         guard let url = URL(string: "https://www.tsawaittimes.com/api/airport/tNnuJo9m20iRpv2MKI1XFbZeC2BrjYLr/\(name)"
+                            
 ) else {
             print("Invalid URL")
             return
