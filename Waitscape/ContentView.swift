@@ -162,7 +162,7 @@ struct ContentView: View {
     }
         }
     func fetchAirportStatus(name: String) async {
-        guard let url = URL(string: "https://www.tsawaittimes.com/api/airport/tNnuJo9m20iRpv2MKI1XFbZeC2BrjYLr/\(name)"
+        guard let url = URL(string: "https://www.tsawaittimes.com/api/airport/Rj9mo0YaIOk0RgoEx4wI1YDJWdunmEmL/\(name)"
                             
 ) else {
             print("Invalid URL")

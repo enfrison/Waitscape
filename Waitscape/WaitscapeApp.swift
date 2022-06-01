@@ -74,7 +74,7 @@ struct TSA: View {
             .frame(width: 300, height: 300)
             //Slider(value: $waitTime, in: 0...120)
             .task {
-                guard let url = URL(string: "https://www.tsawaittimes.com/api/airport/tNnuJo9m20iRpv2MKI1XFbZeC2BrjYLr/DTW") else {
+                guard let url = URL(string: "https://www.tsawaittimes.com/api/airport/Rj9mo0YaIOk0RgoEx4wI1YDJWdunmEmL/DTW") else {
                     print("Invalid URL")
                     return
                 }
