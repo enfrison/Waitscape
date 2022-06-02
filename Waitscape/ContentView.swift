@@ -15,10 +15,13 @@ struct airportStatus: Codable {
 }
 struct Arc: Shape {
 var waitTime: Double
-//    let startAngle: Angle
-//    let endAngle: Angle
-//    let clockwise: Bool
     
+    var animatableData: Double {
+        get { waitTime }
+        set { waitTime = newValue }
+    }
+    
+
     func path(in rect: CGRect) -> Path {
         var path = Path()
         
@@ -35,15 +38,17 @@ struct ContentView: View {
     @State var isSearching = false
     
     var body: some View {
-        ScrollView{
-            
+     //   ScrollView{
+        GeometryReader { geometry in
          VStack{
+             Spacer()
 
              HStack {
                  Image("Waitscape Logo")
                     .resizable()
                     .scaledToFit()
                     .padding([.leading, .bottom])
+                    .padding(.top)
                     .frame(height: 100.0)
                
                  Spacer()
@@ -51,10 +56,12 @@ struct ContentView: View {
      
             HStack{
             HStack{
+                Image(systemName: "magnifyingglass")
+                    .foregroundColor(.gray)
                 TextField("Search Airports", text: $searchAirports)
-                    .padding(.leading, 24)
+                  
             }
-            .padding()
+            .padding(10)
             .submitLabel(.search)
             .onChange(of: searchAirports) {newValue in Task {
                 await fetchAirportStatus(name: newValue)
@@ -63,14 +70,16 @@ struct ContentView: View {
             }
             .background(Color(.systemGray5))
             .cornerRadius(12)
-            .padding(.horizontal)
+            .padding(.horizontal, 5)
       
             .onTapGesture(perform: {
+                withAnimation {
                 isSearching = true
+                }
             })
             .overlay(
                 HStack{
-                   Image(systemName: "magnifyingglass")
+                   
                     Spacer()
                 if isSearching {
                     Button(action: { searchAirports = "" }, label: {
@@ -79,51 +88,31 @@ struct ContentView: View {
                     })
 
                     }
-                }.padding(.horizontal, 32)
+                }.padding(.horizontal)
                     .foregroundColor(.gray)
             )
                 if isSearching{
-                Button(action: { isSearching = false
+                Button(action: {
+                    withAnimation {
+                    isSearching = false
+                    }
                     searchAirports = ""
                     hideKeyboard()
                 }, label: { Text("Cancel")
                         .padding(.trailing)
-                        .padding(.leading, -12)
                         
                   
                 })
-                        .animation(.easeInOut(duration: 2), value: 1)
-                    //.transition(.move(edge: .trailing))
-                    
+                        .animation(.linear, value: isSearching)
                 }
                 
             }
         
             
             
-//            NavigationView{
-        
-             
-                //      VStack {
-                    //                    HStack {
-                    //                        Text(airportStatus.city)
-                    //                            .font(.largeTitle)
-                    //
-                    //                        Text(airportStatus.state)
-                    //                            .font(.largeTitle)
-                    //                    }
-  //
-//                    Text(airportStatus.code)
-//                        .font(.title2)
-//                        .padding()
-                    
-                    
-                    //Text(airportStatus.rightnow_description)
-                    //Text("Wait time at :")
-          //      .padding()
-           // .padding(.vertical, -15)
-            Spacer()
-             GeometryReader { geometry in
+
+//            Spacer()
+
                  ZStack {
                             VStack{
                                 Text(airportStatus.code)
@@ -134,12 +123,13 @@ struct ContentView: View {
             
                                 .multilineTextAlignment(.center)
                             }
+                            .animation(.none, value: waitTime)
                         Arc(waitTime: 120)
                             .stroke(Color("Waitscape Blue"), lineWidth: 12)
                             .opacity(0.4)
                             Arc(waitTime: waitTime)
                                 .stroke(Color("Waitscape Orange"), lineWidth:12)
-                                .animation(.spring(), value: 0.1)
+                                
                    
                         }
                         .padding(40)
@@ -147,19 +137,12 @@ struct ContentView: View {
                     .task {
                         await fetchAirportStatus(name: "")
                 }
+             Spacer()
+             Spacer()
              }
-            
-                 
-                    
-                  
-//            }
-//            .searchable(text: $searchAirports)
-            
-        
-           
             }
-      
-    }
+        .ignoresSafeArea(.keyboard)
+
         }
     func fetchAirportStatus(name: String) async {
         guard let url = URL(string: "https://www.tsawaittimes.com/api/airport/Rj9mo0YaIOk0RgoEx4wI1YDJWdunmEmL/\(name)"
@@ -173,7 +156,9 @@ struct ContentView: View {
             
             if let decodedResponse = try? JSONDecoder().decode(AirportStatus.self, from: data) {
                 airportStatus = decodedResponse
+                withAnimation {
                 waitTime = (airportStatus.rightnow_description as NSString).doubleValue
+                }
             }            } catch {
                 print("Invalid data")
             }
