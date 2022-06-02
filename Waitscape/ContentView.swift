@@ -107,17 +107,13 @@ struct ContentView: View {
                 }
                 
             }
-        
-            
-            
 
-//            Spacer()
 
                  ZStack {
                             VStack{
                                 Text(airportStatus.code)
                                     .font(.largeTitle)
-                                .padding()
+                                    .padding(.top)
                             Text("\(Int(waitTime)) Minutes")
                                 .font(.largeTitle)
             
@@ -137,11 +133,12 @@ struct ContentView: View {
                     .task {
                         await fetchAirportStatus(name: "")
                 }
+                    .padding(.top)
              Spacer()
              Spacer()
              }
             }
-        .ignoresSafeArea(.keyboard)
+    //    .ignoresSafeArea(.keyboard)
 
         }
     func fetchAirportStatus(name: String) async {
