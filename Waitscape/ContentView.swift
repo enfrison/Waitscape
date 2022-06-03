@@ -133,10 +133,11 @@ struct ContentView: View {
                     .task {
                         await fetchAirportStatus(name: "")
                 }
-                    .padding(.top)
+                    .padding(.top, 30)
              Spacer()
              Spacer()
              }
+         .padding(.bottom, 175)
             }
     //    .ignoresSafeArea(.keyboard)
 
