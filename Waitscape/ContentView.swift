@@ -18,7 +18,7 @@ var waitTime: Double
 //    let startAngle: Angle
 //    let endAngle: Angle
 //    let clockwise: Bool
-    // test comment for commit and push
+
     func path(in rect: CGRect) -> Path {
         var path = Path()
         
