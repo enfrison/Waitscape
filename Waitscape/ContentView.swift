@@ -14,11 +14,11 @@ struct airportStatus: Codable {
     var code: String
 }
 struct Arc: Shape {
-var waitTime: Double
-//    let startAngle: Angle
-//    let endAngle: Angle
-//    let clockwise: Bool
-
+    var waitTime: Double
+    //    let startAngle: Angle
+    //    let endAngle: Angle
+    //    let clockwise: Bool
+    
     func path(in rect: CGRect) -> Path {
         var path = Path()
         
@@ -30,141 +30,147 @@ var waitTime: Double
 
 struct ContentView: View {
     @State private var airportStatus = AirportStatus(rightnow_description: "Empty", city: "No results", state: "Nothing", code: "No Results")
+    @State private var airports: [Airport] = []
     @State private var waitTime: Double = 15
     @State private var searchAirports = ""
     @State var isSearching = false
+    @State private var selectedAirport: Airport?
+    
+    var searchResults: [Airport] {
+        if searchAirports.isEmpty {
+            return airports
+        } else {
+            return airports.filter { airport in  airport.formattedName.lowercased().contains(searchAirports.lowercased()) }
+        }
+    }
     
     var body: some View {
-        ScrollView{
-            
-         VStack{
-
-             HStack {
-                 Image("Waitscape Logo")
-                    .resizable()
-                    .scaledToFit()
-                    .padding([.leading, .bottom])
-                    .frame(height: 100.0)
-               
-                 Spacer()
-             }
-     
-            HStack{
-            HStack{
-                TextField("Search Airports", text: $searchAirports)
-                    .padding(.leading, 24)
-            }
-            .padding()
-            .submitLabel(.search)
-            .onChange(of: searchAirports) {newValue in Task {
-                await fetchAirportStatus(name: newValue)
-            }
+        NavigationView {
+            ScrollView{
                 
-            }
-            .background(Color(.systemGray5))
-            .cornerRadius(12)
-            .padding(.horizontal)
-      
-            .onTapGesture(perform: {
-                isSearching = true
-            })
-            .overlay(
-                HStack{
-                   Image(systemName: "magnifyingglass")
-                    Spacer()
-                if isSearching {
-                    Button(action: { searchAirports = "" }, label: {
-                        Image(systemName: "xmark.circle.fill")
-                            .padding(.vertical)
-                    })
-
-                    }
-                }.padding(.horizontal, 32)
-                    .foregroundColor(.gray)
-            )
-                if isSearching{
-                Button(action: { isSearching = false
-                    searchAirports = ""
-                    hideKeyboard()
-                }, label: { Text("Cancel")
-                        .padding(.trailing)
-                        .padding(.leading, -12)
-                        
-                  
-                })
-                        .animation(.easeInOut(duration: 2), value: 1)
-                    //.transition(.move(edge: .trailing))
+                VStack{
                     
-                }
-                
-            }
-        
-            
-            
-//            NavigationView{
-        
-             
-                //      VStack {
-                    //                    HStack {
-                    //                        Text(airportStatus.city)
-                    //                            .font(.largeTitle)
+//                    HStack {
+//                        Image("Waitscape Logo")
+//                            .resizable()
+//                            .scaledToFit()
+//                            .padding([.leading, .bottom])
+//                            .frame(height: 100.0)
+//
+//                        Spacer()
+//                    }
+
+
+                    
+                    
+                    //                    HStack{
+                    //                        HStack{
+                    //                            TextField("Search Airports", text: $searchAirports)
+                    //                                .padding(.leading, 24)
+                    //                        }
+                    //                        .padding()
+                    //                        .submitLabel(.search)
+                    //                        .onChange(of: searchAirports) {newValue in Task {
+                    //                            await fetchAirportStatus(name: newValue)
+                    //                        }
                     //
-                    //                        Text(airportStatus.state)
-                    //                            .font(.largeTitle)
+                    //                        }
+                    //                        .background(Color(.systemGray5))
+                    //                        .cornerRadius(12)
+                    //                        .padding(.horizontal)
+                    //
+                    //                        .onTapGesture(perform: {
+                    //                            isSearching = true
+                    //                        })
+                    //                        .overlay(
+                    //                            HStack{
+                    //                                Image(systemName: "magnifyingglass")
+                    //                                Spacer()
+                    //                                if isSearching {
+                    //                                    Button(action: { searchAirports = "" }, label: {
+                    //                                        Image(systemName: "xmark.circle.fill")
+                    //                                            .padding(.vertical)
+                    //                                    })
+                    //
+                    //                                }
+                    //                            }.padding(.horizontal, 32)
+                    //                                .foregroundColor(.gray)
+                    //                        )
+                    //                        if isSearching{
+                    //                            Button(action: { isSearching = false
+                    //                                searchAirports = ""
+                    //                                hideKeyboard()
+                    //                            }, label: { Text("Cancel")
+                    //                                    .padding(.trailing)
+                    //                                    .padding(.leading, -12)
+                    //
+                    //
+                    //                            })
+                    //                            .animation(.easeInOut(duration: 2), value: 1)
+                    //
+                    //                        }
+                    //
                     //                    }
-  //
-//                    Text(airportStatus.code)
-//                        .font(.title2)
-//                        .padding()
                     
-                    
-                    //Text(airportStatus.rightnow_description)
-                    //Text("Wait time at :")
-          //      .padding()
-           // .padding(.vertical, -15)
-            Spacer()
-             GeometryReader { geometry in
-                 ZStack {
+                    Spacer()
+                    GeometryReader { geometry in
+                        ZStack {
                             VStack{
                                 Text(airportStatus.code)
                                     .font(.largeTitle)
-                                .padding()
-                            Text("\(Int(waitTime)) Minutes")
-                                .font(.largeTitle)
-            
-                                .multilineTextAlignment(.center)
+                                    .padding()
+                                Text("\(Int(waitTime)) Minutes")
+                                    .font(.largeTitle)
+                                
+                                    .multilineTextAlignment(.center)
                             }
-                        Arc(waitTime: 120)
-                            .stroke(Color("Waitscape Blue"), lineWidth: 12)
-                            .opacity(0.4)
+                            Arc(waitTime: 120)
+                                .stroke(Color("Waitscape Blue"), lineWidth: 12)
+                                .opacity(0.4)
                             Arc(waitTime: waitTime)
                                 .stroke(Color("Waitscape Orange"), lineWidth:12)
                                 .animation(.spring(), value: 0.1)
-                   
+                            
                         }
                         .padding(40)
-                 .frame(width: geometry.size.width, height: geometry.size.width)
-                    .task {
-                        await fetchAirportStatus(name: "")
-                }
-             }
-            
-                 
+                        .frame(width: geometry.size.width, height: geometry.size.width)
+                        .task {
+                            await fetchAirportStatus(name: "")
+                            await fetchAirports()
+                        }
+                    }
                     
-                  
-//            }
-//            .searchable(text: $searchAirports)
-            
-        
-           
+                    
+                }
+                
             }
-      
-    }
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Image("Waitscape Logo")
+                        .resizable()
+                        .scaledToFit()
+                        .padding()
+                        .frame(height: 100.0)
+                }
+            }
+            .onChange(of: searchAirports) {newValue in Task {
+                if let airport = airports.first(where: {$0.formattedName == searchAirports}) {
+                    await fetchAirportStatus(name: airport.code)
+                }
+                
+            }
+            }
+            .searchable(text: $searchAirports, placement: .navigationBarDrawer(displayMode: .always)) {
+                ForEach(searchResults, id: \.code) { result in
+                    Text(result.formattedName).searchCompletion(result.formattedName)
+                }
+            }
         }
+    }
     func fetchAirportStatus(name: String) async {
         guard let url = URL(string: "https://www.tsawaittimes.com/api/airport/Rj9mo0YaIOk0RgoEx4wI1YDJWdunmEmL/\(name)"
                             
-) else {
+        ) else {
             print("Invalid URL")
             return
         }
@@ -174,11 +180,44 @@ struct ContentView: View {
             if let decodedResponse = try? JSONDecoder().decode(AirportStatus.self, from: data) {
                 airportStatus = decodedResponse
                 waitTime = (airportStatus.rightnow_description as NSString).doubleValue
-            }            } catch {
-                print("Invalid data")
             }
+            
+        } catch {
+            print("Invalid data")
+        }
     }
-     
+    
+    func fetchAirports() async {
+        guard let url = URL(string: "https://www.tsawaittimes.com/api/airports/Rj9mo0YaIOk0RgoEx4wI1YDJWdunmEmL"
+                            
+        ) else {
+            print("Invalid URL")
+            return
+        }
+        do {
+            let (data, _) = try await URLSession.shared.data(from: url)
+            
+            let decodedResponse = try! JSONDecoder().decode([Airport].self, from: data)
+            airports = decodedResponse
+            
+            for airport in airports {
+                print(airport.code)
+            }
+            
+            
+            //            if let decodedResponse = try? JSONDecoder().decode([Airport].self, from: data) {
+            //                airports = decodedResponse
+            //
+            //                for airport in airports {
+            //                    print(airport.code)
+            //                }
+            //            }
+            
+        } catch {
+            print("Invalid data")
+        }
+    }
+    
 }
 
 #if canImport(UIKit)
