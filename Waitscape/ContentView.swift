@@ -5,7 +5,11 @@
 //  Created by Erika Frison on 5/6/22.
 //
 
+import CoreLocation
+import MapKit
 import SwiftUI
+
+
 
 struct airportStatus: Codable {
     var rightnow_description: String
@@ -14,14 +18,11 @@ struct airportStatus: Codable {
     var code: String
 }
 struct Arc: Shape {
-var waitTime: Double
+    var waitTime: Double
+    //    let startAngle: Angle
+    //    let endAngle: Angle
+    //    let clockwise: Bool
     
-    var animatableData: Double {
-        get { waitTime }
-        set { waitTime = newValue }
-    }
-    
-
     func path(in rect: CGRect) -> Path {
         var path = Path()
         
@@ -33,119 +34,87 @@ var waitTime: Double
 
 struct ContentView: View {
     @State private var airportStatus = AirportStatus(rightnow_description: "Empty", city: "No results", state: "Nothing", code: "No Results")
+    @State private var airports: [Airport] = []
     @State private var waitTime: Double = 15
     @State private var searchAirports = ""
     @State var isSearching = false
+    @State private var selectedAirport: Airport?
+    
+    var searchResults: [Airport] {
+        if searchAirports.isEmpty {
+            return airports
+        } else {
+            return airports.filter { airport in  airport.formattedName.lowercased().contains(searchAirports.lowercased()) }
+        }
+    }
     
     var body: some View {
-     //   ScrollView{
-        GeometryReader { geometry in
-         VStack{
-             Spacer()
-
-             HStack {
-                 Image("Waitscape Logo")
-                    .resizable()
-                    .scaledToFit()
-                    .padding([.leading, .bottom])
-                    .padding(.top)
-                    .frame(height: 100.0)
-               
-                 Spacer()
-             }
-     
-            HStack{
-            HStack{
-                Image(systemName: "magnifyingglass")
-                    .foregroundColor(.gray)
-                TextField("Search Airports", text: $searchAirports)
-                  
-            }
-            .padding(10)
-            .submitLabel(.search)
-            .onChange(of: searchAirports) {newValue in Task {
-                await fetchAirportStatus(name: newValue)
-            }
+        NavigationView {
+            ScrollView{
                 
-            }
-            .background(Color(.systemGray5))
-            .cornerRadius(12)
-            .padding(.horizontal, 5)
-      
-            .onTapGesture(perform: {
-                withAnimation {
-                isSearching = true
-                }
-            })
-            .overlay(
-                HStack{
-                   
+                VStack{
+                    
+                    
+                    
                     Spacer()
-                if isSearching {
-                    Button(action: { searchAirports = "" }, label: {
-                        Image(systemName: "xmark.circle.fill")
-                            .padding(.vertical)
-                    })
-
-                    }
-                }.padding(.horizontal)
-                    .foregroundColor(.gray)
-            )
-                if isSearching{
-                Button(action: {
-                    withAnimation {
-                    isSearching = false
-                    }
-                    searchAirports = ""
-                    hideKeyboard()
-                }, label: { Text("Cancel")
-                        .padding(.trailing)
-                        
-                  
-                })
-                        .animation(.linear, value: isSearching)
-                }
-                
-            }
-
-
-                 ZStack {
+                    GeometryReader { geometry in
+                        ZStack {
                             VStack{
                                 Text(airportStatus.code)
                                     .font(.largeTitle)
-                                    .padding(.top)
-                            Text("\(Int(waitTime)) Minutes")
-                                .font(.largeTitle)
-            
-                                .multilineTextAlignment(.center)
+                                    .padding()
+                                Text("\(Int(waitTime)) Minutes")
+                                    .font(.largeTitle)
+                                
+                                    .multilineTextAlignment(.center)
                             }
-                            .animation(.none, value: waitTime)
-                        Arc(waitTime: 120)
-                            .stroke(Color("Waitscape Blue"), lineWidth: 12)
-                            .opacity(0.4)
+                            Arc(waitTime: 120)
+                                .stroke(Color("Waitscape Blue"), lineWidth: 12)
+                                .opacity(0.4)
                             Arc(waitTime: waitTime)
                                 .stroke(Color("Waitscape Orange"), lineWidth:12)
-                                
-                   
+                                .animation(.spring(), value: 0.1)
+                            
                         }
                         .padding(40)
-                 .frame(width: geometry.size.width, height: geometry.size.width)
-                    .task {
-                        await fetchAirportStatus(name: "")
+                        .frame(width: geometry.size.width, height: geometry.size.width)
+                        .task {
+                            await fetchAirportStatus(name: "")
+                            await fetchAirports()
+                        }
+                    }
+                    
+                    
                 }
-                    .padding(.top, 30)
-             Spacer()
-             Spacer()
-             }
-         .padding(.bottom, 175)
+                
             }
-    //    .ignoresSafeArea(.keyboard)
-
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Image("Waitscape Logo")
+                        .resizable()
+                        .scaledToFit()
+                        .padding()
+                        .frame(height: 100.0)
+                }
+            }
+            .onChange(of: searchAirports) {newValue in Task {
+                if let airport = airports.first(where: {$0.formattedName == searchAirports}) {
+                    await fetchAirportStatus(name: airport.code)
+                }
+                
+            }
+            }
+            .searchable(text: $searchAirports, placement: .navigationBarDrawer(displayMode: .always)) {
+                ForEach(searchResults, id: \.code) { result in
+                    Text(result.formattedName).searchCompletion(result.formattedName)
+                }
+            }
         }
+    }
     func fetchAirportStatus(name: String) async {
-        guard let url = URL(string: "https://www.tsawaittimes.com/api/airport/Rj9mo0YaIOk0RgoEx4wI1YDJWdunmEmL/\(name)"
+        guard let url = URL(string: "https://www.tsawaittimes.com/api/airport/xdPHn0U0V8hXi59Q9MkfHCOrBctU8EfZ/\(name)"
                             
-) else {
+        ) else {
             print("Invalid URL")
             return
         }
@@ -154,14 +123,48 @@ struct ContentView: View {
             
             if let decodedResponse = try? JSONDecoder().decode(AirportStatus.self, from: data) {
                 airportStatus = decodedResponse
-                withAnimation {
                 waitTime = (airportStatus.rightnow_description as NSString).doubleValue
-                }
-            }            } catch {
-                print("Invalid data")
             }
+            
+        } catch {
+            print("Invalid data")
+        }
     }
-     
+    
+    func fetchAirports() async {
+        guard let url = URL(string: "https://www.tsawaittimes.com/api/airports/xdPHn0U0V8hXi59Q9MkfHCOrBctU8EfZ"
+                            
+        ) else {
+            print("Invalid URL")
+            return
+        }
+        do {
+            let (data, _) = try await URLSession.shared.data(from: url)
+            
+            let decodedResponse = try! JSONDecoder().decode([Airport].self, from: data)
+            airports = decodedResponse
+            
+            for airport in airports {
+                print(airport.code)
+            }
+            
+            
+            
+            //            if let decodedResponse = try? JSONDecoder().decode([Airport].self, from: data) {
+            //                airports = decodedResponse
+            //
+            //                for airport in airports {
+            //                    print(airport.code)
+            //                }
+            //            }
+            
+        } catch {
+            print("Invalid data")
+        }
+    }
+    
+    
+    
 }
 
 #if canImport(UIKit)
