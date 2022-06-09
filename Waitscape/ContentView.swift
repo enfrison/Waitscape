@@ -5,7 +5,11 @@
 //  Created by Erika Frison on 5/6/22.
 //
 
+import CoreLocation
+import MapKit
 import SwiftUI
+
+
 
 struct airportStatus: Codable {
     var rightnow_description: String
@@ -168,7 +172,7 @@ struct ContentView: View {
         }
     }
     func fetchAirportStatus(name: String) async {
-        guard let url = URL(string: "https://www.tsawaittimes.com/api/airport/Rj9mo0YaIOk0RgoEx4wI1YDJWdunmEmL/\(name)"
+        guard let url = URL(string: "https://www.tsawaittimes.com/api/airport/xdPHn0U0V8hXi59Q9MkfHCOrBctU8EfZ/\(name)"
                             
         ) else {
             print("Invalid URL")
@@ -188,7 +192,7 @@ struct ContentView: View {
     }
     
     func fetchAirports() async {
-        guard let url = URL(string: "https://www.tsawaittimes.com/api/airports/Rj9mo0YaIOk0RgoEx4wI1YDJWdunmEmL"
+        guard let url = URL(string: "https://www.tsawaittimes.com/api/airports/xdPHn0U0V8hXi59Q9MkfHCOrBctU8EfZ"
                             
         ) else {
             print("Invalid URL")
@@ -205,6 +209,7 @@ struct ContentView: View {
             }
             
             
+            
             //            if let decodedResponse = try? JSONDecoder().decode([Airport].self, from: data) {
             //                airports = decodedResponse
             //
@@ -217,6 +222,8 @@ struct ContentView: View {
             print("Invalid data")
         }
     }
+    
+    
     
 }
 
