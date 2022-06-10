@@ -54,8 +54,6 @@ struct ContentView: View {
                 
                 VStack{
                     
-                    
-                    
                     Spacer()
                     GeometryReader { geometry in
                         ZStack {
@@ -130,40 +128,40 @@ struct ContentView: View {
             print("Invalid data")
         }
     }
-    
-    func fetchAirports() async {
-        guard let url = URL(string: "https://www.tsawaittimes.com/api/airports/xdPHn0U0V8hXi59Q9MkfHCOrBctU8EfZ"
-                            
-        ) else {
-            print("Invalid URL")
-            return
-        }
-        do {
-            let (data, _) = try await URLSession.shared.data(from: url)
-            
-            let decodedResponse = try! JSONDecoder().decode([Airport].self, from: data)
-            airports = decodedResponse
-            
-            for airport in airports {
-                print(airport.code)
-            }
-            
-            
-            
-            //            if let decodedResponse = try? JSONDecoder().decode([Airport].self, from: data) {
-            //                airports = decodedResponse
-            //
-            //                for airport in airports {
-            //                    print(airport.code)
-            //                }
-            //            }
-            
-        } catch {
-            print("Invalid data")
-        }
-    }
-    
-    
+
+      func fetchAirports() async {
+          guard let url = URL(string: "https://www.tsawaittimes.com/api/airports/xdPHn0U0V8hXi59Q9MkfHCOrBctU8EfZ"
+
+          ) else {
+              print("Invalid URL")
+              return
+          }
+          do {
+              let (data, _) = try await URLSession.shared.data(from: url)
+
+              let decodedResponse = try! JSONDecoder().decode([Airport].self, from: data)
+              airports = decodedResponse
+
+              for airport in airports {
+                  print(airport.code)
+              }
+
+
+
+              //            if let decodedResponse = try? JSONDecoder().decode([Airport].self, from: data) {
+              //                airports = decodedResponse
+              //
+              //                for airport in airports {
+              //                    print(airport.code)
+              //                }
+              //            }
+
+          } catch {
+              print("Invalid data")
+          }
+      }
+
+
     
 }
 
