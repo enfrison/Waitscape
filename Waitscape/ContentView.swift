@@ -54,68 +54,6 @@ struct ContentView: View {
                 
                 VStack{
                     
-//                    HStack {
-//                        Image("Waitscape Logo")
-//                            .resizable()
-//                            .scaledToFit()
-//                            .padding([.leading, .bottom])
-//                            .frame(height: 100.0)
-//
-//                        Spacer()
-//                    }
-
-
-                    
-                    
-                    //                    HStack{
-                    //                        HStack{
-                    //                            TextField("Search Airports", text: $searchAirports)
-                    //                                .padding(.leading, 24)
-                    //                        }
-                    //                        .padding()
-                    //                        .submitLabel(.search)
-                    //                        .onChange(of: searchAirports) {newValue in Task {
-                    //                            await fetchAirportStatus(name: newValue)
-                    //                        }
-                    //
-                    //                        }
-                    //                        .background(Color(.systemGray5))
-                    //                        .cornerRadius(12)
-                    //                        .padding(.horizontal)
-                    //
-                    //                        .onTapGesture(perform: {
-                    //                            isSearching = true
-                    //                        })
-                    //                        .overlay(
-                    //                            HStack{
-                    //                                Image(systemName: "magnifyingglass")
-                    //                                Spacer()
-                    //                                if isSearching {
-                    //                                    Button(action: { searchAirports = "" }, label: {
-                    //                                        Image(systemName: "xmark.circle.fill")
-                    //                                            .padding(.vertical)
-                    //                                    })
-                    //
-                    //                                }
-                    //                            }.padding(.horizontal, 32)
-                    //                                .foregroundColor(.gray)
-                    //                        )
-                    //                        if isSearching{
-                    //                            Button(action: { isSearching = false
-                    //                                searchAirports = ""
-                    //                                hideKeyboard()
-                    //                            }, label: { Text("Cancel")
-                    //                                    .padding(.trailing)
-                    //                                    .padding(.leading, -12)
-                    //
-                    //
-                    //                            })
-                    //                            .animation(.easeInOut(duration: 2), value: 1)
-                    //
-                    //                        }
-                    //
-                    //                    }
-                    
                     Spacer()
                     GeometryReader { geometry in
                         ZStack {
@@ -190,40 +128,40 @@ struct ContentView: View {
             print("Invalid data")
         }
     }
-    
-    func fetchAirports() async {
-        guard let url = URL(string: "https://www.tsawaittimes.com/api/airports/xdPHn0U0V8hXi59Q9MkfHCOrBctU8EfZ"
-                            
-        ) else {
-            print("Invalid URL")
-            return
-        }
-        do {
-            let (data, _) = try await URLSession.shared.data(from: url)
-            
-            let decodedResponse = try! JSONDecoder().decode([Airport].self, from: data)
-            airports = decodedResponse
-            
-            for airport in airports {
-                print(airport.code)
-            }
-            
-            
-            
-            //            if let decodedResponse = try? JSONDecoder().decode([Airport].self, from: data) {
-            //                airports = decodedResponse
-            //
-            //                for airport in airports {
-            //                    print(airport.code)
-            //                }
-            //            }
-            
-        } catch {
-            print("Invalid data")
-        }
-    }
-    
-    
+
+      func fetchAirports() async {
+          guard let url = URL(string: "https://www.tsawaittimes.com/api/airports/xdPHn0U0V8hXi59Q9MkfHCOrBctU8EfZ"
+
+          ) else {
+              print("Invalid URL")
+              return
+          }
+          do {
+              let (data, _) = try await URLSession.shared.data(from: url)
+
+              let decodedResponse = try! JSONDecoder().decode([Airport].self, from: data)
+              airports = decodedResponse
+
+              for airport in airports {
+                  print(airport.code)
+              }
+
+
+
+              //            if let decodedResponse = try? JSONDecoder().decode([Airport].self, from: data) {
+              //                airports = decodedResponse
+              //
+              //                for airport in airports {
+              //                    print(airport.code)
+              //                }
+              //            }
+
+          } catch {
+              print("Invalid data")
+          }
+      }
+
+
     
 }
 

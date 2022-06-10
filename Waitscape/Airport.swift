@@ -2,7 +2,7 @@
 //  Airport.swift
 //  Waitscape
 //
-//  Created by Devin Allen on 6/7/22.
+//  Created by Erika Frison on 6/9/22.
 //
 
 import Foundation
@@ -19,4 +19,4 @@ struct Airport: Codable, Hashable {
         "\(code) - \(name)"
     }
 }
- 
+
