@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		3CBB23BB284F8FED0044D062 /* Airport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CBB23BA284F8FED0044D062 /* Airport.swift */; };
+		7E60DE4428578BB000130B88 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E60DE4328578BB000130B88 /* MapKit.framework */; };
+		7EA4D996285A29AE00C92F67 /* Routes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EA4D995285A29AE00C92F67 /* Routes.swift */; };
 		EA0A11FB283D1BE500DD024C /* CurrentLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0A11FA283D1BE500DD024C /* CurrentLocation.swift */; };
 		EA2FB338282563DE00867747 /* WaitscapeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2FB337282563DE00867747 /* WaitscapeApp.swift */; };
 		EA2FB33A282563DE00867747 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2FB339282563DE00867747 /* ContentView.swift */; };
@@ -17,6 +19,9 @@
 
 /* Begin PBXFileReference section */
 		3CBB23BA284F8FED0044D062 /* Airport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Airport.swift; sourceTree = "<group>"; };
+		7E60DE4128578B7A00130B88 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		7E60DE4328578BB000130B88 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		7EA4D995285A29AE00C92F67 /* Routes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Routes.swift; sourceTree = "<group>"; };
 		EA0A11FA283D1BE500DD024C /* CurrentLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentLocation.swift; sourceTree = "<group>"; };
 		EA2FB334282563DE00867747 /* Waitscape.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Waitscape.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA2FB337282563DE00867747 /* WaitscapeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitscapeApp.swift; sourceTree = "<group>"; };
@@ -30,17 +35,27 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7E60DE4428578BB000130B88 /* MapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7E60DE4228578BB000130B88 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7E60DE4328578BB000130B88 /* MapKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		EA2FB32B282563DE00867747 = {
 			isa = PBXGroup;
 			children = (
 				EA2FB336282563DE00867747 /* Waitscape */,
 				EA2FB335282563DE00867747 /* Products */,
+				7E60DE4228578BB000130B88 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -55,10 +70,12 @@
 		EA2FB336282563DE00867747 /* Waitscape */ = {
 			isa = PBXGroup;
 			children = (
+				7E60DE4128578B7A00130B88 /* Info.plist */,
 				EA2FB337282563DE00867747 /* WaitscapeApp.swift */,
 				EA2FB339282563DE00867747 /* ContentView.swift */,
 				3CBB23BA284F8FED0044D062 /* Airport.swift */,
 				EA0A11FA283D1BE500DD024C /* CurrentLocation.swift */,
+				7EA4D995285A29AE00C92F67 /* Routes.swift */,
 				EA2FB33B282563DF00867747 /* Assets.xcassets */,
 				EA2FB33D282563DF00867747 /* Preview Content */,
 			);
@@ -145,6 +162,7 @@
 			files = (
 				EA0A11FB283D1BE500DD024C /* CurrentLocation.swift in Sources */,
 				3CBB23BB284F8FED0044D062 /* Airport.swift in Sources */,
+				7EA4D996285A29AE00C92F67 /* Routes.swift in Sources */,
 				EA2FB33A282563DE00867747 /* ContentView.swift in Sources */,
 				EA2FB338282563DE00867747 /* WaitscapeApp.swift in Sources */,
 			);
@@ -277,10 +295,14 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_ASSET_PATHS = "\"Waitscape/Preview Content\"";
-				DEVELOPMENT_TEAM = 9327DWPA75;
+				DEVELOPMENT_TEAM = H52L3Y435H;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Waitscape/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "";
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "";
 				INFOPLIST_KEY_NSLocationUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -309,10 +331,14 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_ASSET_PATHS = "\"Waitscape/Preview Content\"";
-				DEVELOPMENT_TEAM = 9327DWPA75;
+				DEVELOPMENT_TEAM = H52L3Y435H;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Waitscape/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "";
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "";
 				INFOPLIST_KEY_NSLocationUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

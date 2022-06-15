@@ -12,10 +12,12 @@ import SwiftUI
 
 
 struct airportStatus: Codable {
+    var rightnow: Int
     var rightnow_description: String
     var city: String
     var state: String
     var code: String
+    
 }
 struct Arc: Shape {
     var waitTime: Double
@@ -185,6 +187,9 @@ struct ContentView: View {
                 airportStatus = decodedResponse
                 waitTime = (airportStatus.rightnow_description as NSString).doubleValue
             }
+
+            print(airportStatus.rightnow_description)
+            print(airportStatus)
             
         } catch {
             print("Invalid data")
@@ -205,7 +210,7 @@ struct ContentView: View {
             airports = decodedResponse
             
             for airport in airports {
-                print(airport.code)
+                //print(airport.code)
             }
             
             
@@ -224,7 +229,7 @@ struct ContentView: View {
     }
     
     
-    
+
 }
 
 #if canImport(UIKit)
