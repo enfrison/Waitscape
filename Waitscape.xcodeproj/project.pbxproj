@@ -15,6 +15,7 @@
 		EA2FB33A282563DE00867747 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2FB339282563DE00867747 /* ContentView.swift */; };
 		EA2FB33C282563DF00867747 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA2FB33B282563DF00867747 /* Assets.xcassets */; };
 		EA2FB33F282563DF00867747 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA2FB33E282563DF00867747 /* Preview Assets.xcassets */; };
+		EA457FBC28522516007B60E4 /* Airport.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA457FBB28522516007B60E4 /* Airport.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,8 @@
 		EA2FB339282563DE00867747 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		EA2FB33B282563DF00867747 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EA2FB33E282563DF00867747 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		EA457FBA28490F5A007B60E4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		EA457FBB28522516007B60E4 /* Airport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Airport.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,7 +78,9 @@
 				EA2FB339282563DE00867747 /* ContentView.swift */,
 				3CBB23BA284F8FED0044D062 /* Airport.swift */,
 				EA0A11FA283D1BE500DD024C /* CurrentLocation.swift */,
+
 				7EA4D995285A29AE00C92F67 /* Routes.swift */,
+
 				EA2FB33B282563DF00867747 /* Assets.xcassets */,
 				EA2FB33D282563DF00867747 /* Preview Content */,
 			);
@@ -161,8 +166,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				EA0A11FB283D1BE500DD024C /* CurrentLocation.swift in Sources */,
+
 				3CBB23BB284F8FED0044D062 /* Airport.swift in Sources */,
 				7EA4D996285A29AE00C92F67 /* Routes.swift in Sources */,
+
 				EA2FB33A282563DE00867747 /* ContentView.swift in Sources */,
 				EA2FB338282563DE00867747 /* WaitscapeApp.swift in Sources */,
 			);
@@ -295,12 +302,14 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_ASSET_PATHS = "\"Waitscape/Preview Content\"";
+
 				DEVELOPMENT_TEAM = H52L3Y435H;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Waitscape/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "";
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
+
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "";
 				INFOPLIST_KEY_NSLocationUsageDescription = "";
@@ -308,13 +317,13 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.academy.Waitscape;
+				PRODUCT_BUNDLE_IDENTIFIER = com.academy.Waitscape2023;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -331,12 +340,14 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_ASSET_PATHS = "\"Waitscape/Preview Content\"";
+
 				DEVELOPMENT_TEAM = H52L3Y435H;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Waitscape/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "";
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
+
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "";
 				INFOPLIST_KEY_NSLocationUsageDescription = "";
@@ -344,13 +355,13 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.academy.Waitscape;
+				PRODUCT_BUNDLE_IDENTIFIER = com.academy.Waitscape2023;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;

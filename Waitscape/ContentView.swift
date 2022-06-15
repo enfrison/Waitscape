@@ -56,68 +56,6 @@ struct ContentView: View {
                 
                 VStack{
                     
-//                    HStack {
-//                        Image("Waitscape Logo")
-//                            .resizable()
-//                            .scaledToFit()
-//                            .padding([.leading, .bottom])
-//                            .frame(height: 100.0)
-//
-//                        Spacer()
-//                    }
-
-
-                    
-                    
-                    //                    HStack{
-                    //                        HStack{
-                    //                            TextField("Search Airports", text: $searchAirports)
-                    //                                .padding(.leading, 24)
-                    //                        }
-                    //                        .padding()
-                    //                        .submitLabel(.search)
-                    //                        .onChange(of: searchAirports) {newValue in Task {
-                    //                            await fetchAirportStatus(name: newValue)
-                    //                        }
-                    //
-                    //                        }
-                    //                        .background(Color(.systemGray5))
-                    //                        .cornerRadius(12)
-                    //                        .padding(.horizontal)
-                    //
-                    //                        .onTapGesture(perform: {
-                    //                            isSearching = true
-                    //                        })
-                    //                        .overlay(
-                    //                            HStack{
-                    //                                Image(systemName: "magnifyingglass")
-                    //                                Spacer()
-                    //                                if isSearching {
-                    //                                    Button(action: { searchAirports = "" }, label: {
-                    //                                        Image(systemName: "xmark.circle.fill")
-                    //                                            .padding(.vertical)
-                    //                                    })
-                    //
-                    //                                }
-                    //                            }.padding(.horizontal, 32)
-                    //                                .foregroundColor(.gray)
-                    //                        )
-                    //                        if isSearching{
-                    //                            Button(action: { isSearching = false
-                    //                                searchAirports = ""
-                    //                                hideKeyboard()
-                    //                            }, label: { Text("Cancel")
-                    //                                    .padding(.trailing)
-                    //                                    .padding(.leading, -12)
-                    //
-                    //
-                    //                            })
-                    //                            .animation(.easeInOut(duration: 2), value: 1)
-                    //
-                    //                        }
-                    //
-                    //                    }
-                    
                     Spacer()
                     GeometryReader { geometry in
                         ZStack {
@@ -195,6 +133,7 @@ struct ContentView: View {
             print("Invalid data")
         }
     }
+
     
     func fetchAirports() async {
         guard let url = URL(string: "https://www.tsawaittimes.com/api/airports/ZGfBckOH1fUljXs5lZwGykOYskbz6dQU"
@@ -229,6 +168,7 @@ struct ContentView: View {
     }
     
     
+
 
 }
 
