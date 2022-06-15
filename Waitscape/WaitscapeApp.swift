@@ -12,6 +12,7 @@ struct AirportStatus: Codable {
     var city: String
     var state: String
     var code: String
+ 
 }
 struct ArcGraph: Shape {
     var waitTime: Double

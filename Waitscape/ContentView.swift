@@ -12,10 +12,12 @@ import SwiftUI
 
 
 struct airportStatus: Codable {
+    var rightnow: Int
     var rightnow_description: String
     var city: String
     var state: String
     var code: String
+    
 }
 struct Arc: Shape {
     var waitTime: Double
@@ -110,7 +112,7 @@ struct ContentView: View {
         }
     }
     func fetchAirportStatus(name: String) async {
-        guard let url = URL(string: "https://www.tsawaittimes.com/api/airport/xdPHn0U0V8hXi59Q9MkfHCOrBctU8EfZ/\(name)"
+        guard let url = URL(string: "https://www.tsawaittimes.com/api/airport/ZGfBckOH1fUljXs5lZwGykOYskbz6dQU/\(name)"
                             
         ) else {
             print("Invalid URL")
@@ -123,46 +125,51 @@ struct ContentView: View {
                 airportStatus = decodedResponse
                 waitTime = (airportStatus.rightnow_description as NSString).doubleValue
             }
+
+            print(airportStatus.rightnow_description)
+            print(airportStatus)
             
         } catch {
             print("Invalid data")
         }
     }
 
-      func fetchAirports() async {
-          guard let url = URL(string: "https://www.tsawaittimes.com/api/airports/xdPHn0U0V8hXi59Q9MkfHCOrBctU8EfZ"
-
-          ) else {
-              print("Invalid URL")
-              return
-          }
-          do {
-              let (data, _) = try await URLSession.shared.data(from: url)
-
-              let decodedResponse = try! JSONDecoder().decode([Airport].self, from: data)
-              airports = decodedResponse
-
-              for airport in airports {
-                  print(airport.code)
-              }
-
-
-
-              //            if let decodedResponse = try? JSONDecoder().decode([Airport].self, from: data) {
-              //                airports = decodedResponse
-              //
-              //                for airport in airports {
-              //                    print(airport.code)
-              //                }
-              //            }
-
-          } catch {
-              print("Invalid data")
-          }
-      }
-
-
     
+    func fetchAirports() async {
+        guard let url = URL(string: "https://www.tsawaittimes.com/api/airports/ZGfBckOH1fUljXs5lZwGykOYskbz6dQU"
+                            
+        ) else {
+            print("Invalid URL")
+            return
+        }
+        do {
+            let (data, _) = try await URLSession.shared.data(from: url)
+            
+            let decodedResponse = try! JSONDecoder().decode([Airport].self, from: data)
+            airports = decodedResponse
+            
+            for airport in airports {
+                //print(airport.code)
+            }
+            
+            
+            
+            //            if let decodedResponse = try? JSONDecoder().decode([Airport].self, from: data) {
+            //                airports = decodedResponse
+            //
+            //                for airport in airports {
+            //                    print(airport.code)
+            //                }
+            //            }
+            
+        } catch {
+            print("Invalid data")
+        }
+    }
+    
+    
+
+
 }
 
 #if canImport(UIKit)
