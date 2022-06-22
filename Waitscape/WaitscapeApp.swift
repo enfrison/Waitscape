@@ -16,10 +16,6 @@ struct AirportStatus: Codable {
 }
 struct ArcGraph: Shape {
     var waitTime: Double
-    
-    
-    //range of mins: 0 to 120
-    //range of arc: -240 to 60
     func path(in rect: CGRect) -> Path {
         var path = Path()
         path.addArc(center: CGPoint(x: rect.midX, y: rect.midY), radius: rect.width / 2, startAngle: Angle(degrees: -240), endAngle: Angle(degrees: Double(-240.0 + (waitTime * 300 / 120))), clockwise: false)
@@ -56,10 +52,6 @@ struct TSA: View {
             Text(airportStatus.code)
                 .font(.title2)
                 .padding()
-            
-            
-            //Text(airportStatus.rightnow_description)
-            //Text("Wait time at :")
                 .padding()
             ZStack {
                 Text("\(Int(waitTime)) Minutes")
@@ -73,7 +65,6 @@ struct TSA: View {
                 
             }
             .frame(width: 300, height: 300)
-            //Slider(value: $waitTime, in: 0...120)
             .task {
                 guard let url = URL(string: "https://www.tsawaittimes.com/api/airport/Rj9mo0YaIOk0RgoEx4wI1YDJWdunmEmL/DTW") else {
                     print("Invalid URL")
