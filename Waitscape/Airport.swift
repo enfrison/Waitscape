@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreLocation
 
 struct Airport: Codable, Hashable {
     var code: String
@@ -17,6 +18,15 @@ struct Airport: Codable, Hashable {
     
     var formattedName: String {
         "\(code) - \(name)"
+    }
+    
+    var coordinate: CLLocationCoordinate2D? {
+        if let latitude = Double(latitude),
+           let longitude = Double(longitude) {
+            return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        }
+     
+        return nil
     }
 }
 

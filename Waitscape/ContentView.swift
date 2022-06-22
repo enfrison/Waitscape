@@ -34,6 +34,7 @@ struct Arc: Shape {
 
 struct ContentView: View {
     @State private var airportStatus = AirportStatus(rightnow_description: "Empty", city: "No results", state: "Nothing", code: "Escape the Wait")
+    @StateObject var usersCurrentLocation = UsersCurrentLocation()
     @State private var airports: [Airport] = []
     @State private var waitTime: Double = 0
     @State private var searchAirports = ""
@@ -98,6 +99,16 @@ struct ContentView: View {
             .onChange(of: searchAirports) {newValue in Task {
                 if let airport = airports.first(where: {$0.formattedName == searchAirports}) {
                     await fetchAirportStatus(name: airport.code)
+                    
+                    print("\(airport.coordinate)" ?? " No coordinate")
+                    print("\(usersCurrentLocation.location)" ?? " No coordinate")
+                    
+                    
+                    if let usersCoordinate = usersCurrentLocation.location,
+                       let destinationCoordinate = airport.coordinate {
+                        getDirections(currentLocationCoordinate: usersCoordinate, destinationCoordinate: destinationCoordinate)
+                    }
+
                 }
                 
             }
@@ -106,6 +117,9 @@ struct ContentView: View {
                 ForEach(searchResults, id: \.code) { result in
                     Text(result.formattedName).searchCompletion(result.formattedName)
                 }
+            }
+            .onAppear {
+                usersCurrentLocation.requestLocationPermission()
             }
         }
     }
