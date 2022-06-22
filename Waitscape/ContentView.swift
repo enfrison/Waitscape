@@ -21,9 +21,7 @@ struct airportStatus: Codable {
 }
 struct Arc: Shape {
     var waitTime: Double
-    //    let startAngle: Angle
-    //    let endAngle: Angle
-    //    let clockwise: Bool
+    
     
     func path(in rect: CGRect) -> Path {
         var path = Path()
@@ -35,9 +33,9 @@ struct Arc: Shape {
 }
 
 struct ContentView: View {
-    @State private var airportStatus = AirportStatus(rightnow_description: "Empty", city: "No results", state: "Nothing", code: "No Results")
+    @State private var airportStatus = AirportStatus(rightnow_description: "Empty", city: "No results", state: "Nothing", code: "Escape the Wait")
     @State private var airports: [Airport] = []
-    @State private var waitTime: Double = 15
+    @State private var waitTime: Double = 0
     @State private var searchAirports = ""
     @State var isSearching = false
     @State private var selectedAirport: Airport?
@@ -112,7 +110,7 @@ struct ContentView: View {
         }
     }
     func fetchAirportStatus(name: String) async {
-        guard let url = URL(string: "https://www.tsawaittimes.com/api/airport/ZGfBckOH1fUljXs5lZwGykOYskbz6dQU/\(name)"
+        guard let url = URL(string: "https://www.tsawaittimes.com/api/airport/yGO0PyG8iaK4BCHQBlxXfAJXpe6vkFUa/\(name)"
                             
         ) else {
             print("Invalid URL")
@@ -136,7 +134,7 @@ struct ContentView: View {
 
     
     func fetchAirports() async {
-        guard let url = URL(string: "https://www.tsawaittimes.com/api/airports/ZGfBckOH1fUljXs5lZwGykOYskbz6dQU"
+        guard let url = URL(string: "https://www.tsawaittimes.com/api/airports/yGO0PyG8iaK4BCHQBlxXfAJXpe6vkFUa"
                             
         ) else {
             print("Invalid URL")
@@ -149,18 +147,10 @@ struct ContentView: View {
             airports = decodedResponse
             
             for airport in airports {
-                //print(airport.code)
             }
             
             
-            
-            //            if let decodedResponse = try? JSONDecoder().decode([Airport].self, from: data) {
-            //                airports = decodedResponse
-            //
-            //                for airport in airports {
-            //                    print(airport.code)
-            //                }
-            //            }
+        
             
         } catch {
             print("Invalid data")
