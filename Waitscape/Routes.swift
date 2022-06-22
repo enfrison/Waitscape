@@ -10,14 +10,14 @@ import UIKit
 import MapKit
 import CoreLocation
 
-    func getDirections() {
+func getDirections(currentLocationCoordinate: CLLocationCoordinate2D, destinationCoordinate: CLLocationCoordinate2D) {
         
         // Create a MKDirections.Request()
         let request = MKDirections.Request()
-        
-        // Create a CLLocationCoordinate2DMake for both your current location and destination location using the respective latitude and longitudes
-        let currentLocationCoordinate = CLLocationCoordinate2D(latitude: 40.7127, longitude: -74.0059)
-        let destinationCoordinate = CLLocationCoordinate2D(latitude: 37.783333, longitude: -122.416667)
+//
+//        // Create a CLLocationCoordinate2DMake for both your current location and destination location using the respective latitude and longitudes
+//        let currentLocationCoordinate = CLLocationCoordinate2D(latitude: 40.7127, longitude: -74.0059)
+//        let destinationCoordinate = CLLocationCoordinate2D(latitude: 37.783333, longitude: -122.416667)
         
         // Create two MKPlacemark for the source and destination using your two previously defined coordinates
         let currentLocationPlaceMark = MKPlacemark(coordinate: currentLocationCoordinate, addressDictionary: nil)
@@ -55,6 +55,8 @@ import CoreLocation
             // Use the formatter’s string method to get the TimeInterval formatted as a String
             
             let formattedExpectedTravelTime = formatter.string(from: expectedTravelTime)
+            
+            print(formattedExpectedTravelTime)
         }
     }
     private func mapView( _ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
@@ -62,5 +64,3 @@ import CoreLocation
         renderer.strokeColor = UIColor.blue
         return renderer
     }
-
-

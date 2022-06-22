@@ -11,7 +11,7 @@ import SwiftUI
 
 struct CurrentLocation: View {
     
-@StateObject private var viewModel = ContentViewModel()
+@StateObject private var viewModel = UsersCurrentLocation()
     
     var body: some View {
         ZStack(alignment: .bottom){
@@ -39,9 +39,11 @@ struct CurrentLocation_Previews: PreviewProvider {
     }
 }
 
-final class ContentViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
+final class UsersCurrentLocation: NSObject, ObservableObject, CLLocationManagerDelegate {
     
     @Published var region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 50, longitude: 160), span: MKCoordinateSpan(latitudeDelta: 100, longitudeDelta: 100))
+    
+    @Published var location: CLLocationCoordinate2D?
     
     let locationManager = CLLocationManager()
     
@@ -52,16 +54,13 @@ final class ContentViewModel: NSObject, ObservableObject, CLLocationManagerDeleg
     
     func requestLocationPermission() {
         locationManager.requestLocation()
+        locationManager.location?.coordinate
         
     }
+    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let latestLocation = locations.first else{
-            //show an error
-            return
-        }
-        DispatchQueue.main.async {
-            self.region = MKCoordinateRegion(center: latestLocation.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.09, longitudeDelta: 0.09))
-        }
+        location = locations.first?.coordinate
+
     }
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print(error.localizedDescription)
